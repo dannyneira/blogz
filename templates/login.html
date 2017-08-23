@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Log in to Get It Done!</h1>
+<p>Don't have an account? <a href="/register">Register</a></p>
+<form action="/login" method="post">
+    <table>
+        <tr>
+            <td>
+                <label for="email">Email
+                <input id='email' name="email" type="text" value='{{ email }}'>
+                <span class="error">{{ email_err }}</span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">Password
+                <input id='password' name="password" type="password">
+                <span class="error">{{ password_err }}</span>
+                </label>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Login">
+</form>
+{% endblock %}

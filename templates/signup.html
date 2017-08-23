@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Sign-up</h1>
+<p>Already registered? <a href="/login">Login</a></p>
+<h2 class='error'>{{ general_err }}</h2>
+<form action="/register" method="post">
+    <table>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td>
+                <input id='email' name="email" type="text" value="{{ email }}">
+                <span class="error">{{ email_err }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td>
+                <input id='password' name="password" type="password">
+                <span class="error">{{ password_err }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="verify">Verify Password</label></td>
+            <td>
+                <input id='verify' name="verify" type="password">
+                <span class="error">{{ verify_err }}</span>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Register">
+</form>
+{% endblock %}

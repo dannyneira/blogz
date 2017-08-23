@@ -4,6 +4,7 @@
         <title>{{base_title}}</title>
         <style> 
             .error{color:red;}
+            .info{color:green}
             .header{text-align: center;}
             .link{text-decoration: none;color:blue; margin-right: 10px;}
             .link:visited{color:blue;}
@@ -15,6 +16,11 @@
         <a class='link' href="/newpost">Add a Post</a>
     </nav>
     <h1 class='header'>{{ header }}</h1>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% for class, message in messages %}
+        <span class='{{class}}'>{{ message }}</span>
+    {% endfor %}
+    {% endwith %}
     <hr>
     {% block content %}
     {% endblock %}
