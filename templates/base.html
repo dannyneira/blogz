@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{{base_title}}</title>
+        <style> 
+            .error{color:red;}
+            .header{text-align: center;}
+            .link{text-decoration: none;color:blue; margin-right: 10px;}
+            .link:visited{color:blue;}
+        </style>
+    </head>
+<body>
+    <nav>
+        <a class='link' href="/blog">Main Blog</a> 
+        <a class='link' href="/newpost">Add a Post</a>
+    </nav>
+    <h1 class='header'>{{ header }}</h1>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

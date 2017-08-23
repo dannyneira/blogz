@@ -1,2 +1,6 @@
-# blogz
-Blogging Site made for LaunchCode CodeCamp
+# Build-A-Blog
+Simple Blogging site made for LaunchCode CodeCamp
+
+## What I learned:
+* Database Management with phpMyAdmin
+* Object-Relational Mapping with SQL Alchemy
