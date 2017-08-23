@@ -1,5 +1,5 @@
 # Blog
-Simple Blogging site made for LaunchCode CodeCamp
+Blogging site made for LaunchCode CodeCamp
 
 ## What I learned:
 * Database Management with phpMyAdmin
