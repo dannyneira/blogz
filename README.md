@@ -1,4 +1,4 @@
-# Build-A-Blog
+# Blog
 Simple Blogging site made for LaunchCode CodeCamp
 
 ## What I learned:
