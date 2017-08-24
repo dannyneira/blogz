@@ -5,19 +5,26 @@
         <style>
             html, body{margin-top: 1rem; margin-left: 10rem; margin-right: 10rem;
                 font-family: Arial, Helvetica, sans-serif;}
+            br, hr{ clear:both;}
             a{text-decoration: none; color:blue; margin-right: 1rem;}
             a:visited{color:blue;}
             .error{color:red;}
             .info{color:green}
             .header{text-align: left;}
+            .nav-bar{float:left;}
+            .nav-user{float:right;}
         </style>
     </head>
 <body>
-    <nav>
+    <nav class='nav-bar'>
         <a href="/">Home</a>
         <a href="/blog">All Posts</a>
         <a href="/newpost">New Post</a>
     </nav>
+    <nav class='nav-user'>
+        <a href="/login">Login</a>
+        <a href="/logout">Logout</a>
+    </nav><br>
     <h1 class='header'>{{ header }}</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% for class, message in messages %}

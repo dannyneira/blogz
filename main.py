@@ -34,7 +34,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register', ' ', 'blog']
+    allowed_routes = ['login', 'register', 'blog']
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/login')
 
@@ -111,7 +111,7 @@ def register():
 
             session['email'] = email
             flash("Registered as " + email, 'info')
-            return redirect('/')
+            return redirect('/newpost')
         else:
             flash("Signup Failed!", 'error')
             return render_template('signup.html',
