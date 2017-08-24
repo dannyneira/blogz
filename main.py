@@ -13,12 +13,12 @@ app.secret_key = 'f72746fd810a750dbee37dc116c2aa6aaf070df82d0bd7edb42bfbb42c96e9
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    base_title = db.Column(db.String(120))
+    title = db.Column(db.String(120))
     body = db.Column(db.String(480))
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id')
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, base_title, body, owner):
-        self.base_title = base_title
+    def __init__(self, title, body, owner):
+        self.title = title
         self.body = body
         self.owner = owner
 
@@ -34,72 +34,16 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register']
+    allowed_routes = ['login', 'register', '/']
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/login')
 
-@app.route('/signup', methods=['GET', 'POST'])
-def register():
-    if request.method== 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        verify = request.form['verify']
-
-        # validate user data
-        existing_user = User.query.filter_by(email=email).first()
-        validation = validate_signup(email,password,verify)
-
-        if validation == True and not existing_user:
-            new_user = User(email, make_pw_hash(password))
-            db.session.add(new_user)
-            db.session.commit()
-
-            session['email'] = email
-            flash("Registered as " + email, 'info')
-            return redirect('/')
-        else:
-            flash("Registration Failed!", 'error')
-            return render_template('signup.html',
-                base_title='Register',
-                email=validation['email'],
-                email_err=validation['email_err'],
-                password_err=validation['password_err'],
-                verify_err=validation['verify_err'])
-    else:        
-        return render_template('signup.html', base_title='Register')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        user = User.query.filter_by(email=email).first()
-        validation = validate_login(user, password)
-
-        if validation == True:
-            session['email'] = email
-            flash("Welcome "+email, 'info')
-            return redirect('/')
-        else:
-            flash("Login Failed!", 'error')
-            return render_template('login.html',
-                base_title='Login Error!',
-                email=validation['email'],
-                email_err=validation['email_err'],
-                password_err=validation['password_err'])
-    else:
-        return render_template('login.html', base_title='Login')
-
-@app.route('/logout')
-def logout():
-    flash("Goodbye "+session['email'], 'info')
-    del session['email']
-    return redirect('/')
-
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template('index.html', base_title='All Blogs')
+    title_header='All Blogs'
+    return render_template('index.html', 
+        base_title=title_header,
+        header=title_header)
 
 @app.route('/blog', methods=['GET'])
 def blog():
@@ -148,22 +92,81 @@ def newpost():
             base_title=title_header, 
             header=title_header)
 
-@app.route('/')
-def index():
-    return render_template('index.html', )
+@app.route('/signup', methods=['GET', 'POST'])
+def register():
+    title_header = 'Signup'
+    if request.method== 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        # validate user data
+        existing_user = User.query.filter_by(email=email).first()
+        validation = validate_signup(email,password,verify)
+
+        if validation == True and not existing_user:
+            new_user = User(email, make_pw_hash(password))
+            db.session.add(new_user)
+            db.session.commit()
+
+            session['email'] = email
+            flash("Registered as " + email, 'info')
+            return redirect('/')
+        else:
+            flash("Signup Failed!", 'error')
+            return render_template('signup.html',
+                base_title=title_header,
+                header=title_header,
+                email=validation['email'],
+                email_err=validation['email_err'],
+                password_err=validation['password_err'],
+                verify_err=validation['verify_err'])
+    else:
+        return render_template('signup.html', base_title='Register')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    title_header = 'Login'
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        user = User.query.filter_by(email=email).first()
+        validation = validate_login(user, password)
+
+        if validation == True:
+            session['email'] = email
+            flash("Welcome "+session['email'], 'info')
+            return redirect('/newpost')
+        else:
+            flash("Login Failed!", 'error')
+            return render_template('login.html',
+                base_title=title_header,
+                header=title_header,
+                email=validation['email'],
+                email_err=validation['email_err'],
+                password_err=validation['password_err'])
+    else:
+        return render_template('login.html', 
+            base_title=title_header,
+            header=title_header)
+
+@app.route('/logout')
+def logout():
+    flash("Goodbye "+session['email'], 'info')
+    del session['email']
+    return redirect('/')
+
 
 if __name__ == "__main__":
     app.run()
 
-
 # @app.route('/delpost', methods=['POST'])
 # def delete_post():
 
-#     task_id = int(request.form['task-id'])
-#     task = Task.query.get(task_id)
-#     task.completed = True
-
-#     db.session.add(task)
+#     blog_id = int(request.form['blog-id'])
+#     post = Blog.query.get(blog_id)
+#     db.session.remove(post)
 #     db.session.commit()
 
-#     return redirect('/')
+#     return redirect('/blog')

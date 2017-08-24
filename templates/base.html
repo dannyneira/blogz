@@ -2,18 +2,21 @@
 <html>
     <head>
         <title>{{base_title}}</title>
-        <style> 
+        <style>
+            html, body{margin-top: 1rem; margin-left: 10rem; margin-right: 10rem;
+                font-family: Arial, Helvetica, sans-serif;}
+            a{text-decoration: none; color:blue; margin-right: 1rem;}
+            a:visited{color:blue;}
             .error{color:red;}
             .info{color:green}
-            .header{text-align: center;}
-            .link{text-decoration: none;color:blue; margin-right: 10px;}
-            .link:visited{color:blue;}
+            .header{text-align: left;}
         </style>
     </head>
 <body>
     <nav>
-        <a class='link' href="/blog">Main Blog</a> 
-        <a class='link' href="/newpost">Add a Post</a>
+        <a href="/">Home</a>
+        <a href="/blog">All Posts</a>
+        <a href="/newpost">New Post</a>
     </nav>
     <h1 class='header'>{{ header }}</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}

@@ -66,7 +66,7 @@ def validate_login(user, password):
 
     # Validate Emails
     if user == None:
-        errors['email_err'] = "Email not found, please try again or Register"
+        errors['email_err'] = "Email not found, please try again or signup"
     # Validate Passwords
     if user and password == "":
         errors['email'] = user.email

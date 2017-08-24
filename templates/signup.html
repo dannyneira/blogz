@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Sign-up</h1>
-<p>Already registered? <a href="/login">Login</a></p>
-<h2 class='error'>{{ general_err }}</h2>
 <form action="/register" method="post">
     <table>
         <tr>
@@ -27,6 +24,7 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Register">
+    <input type="submit" value="Signup">
 </form>
+<p>Already registered? <a class='link' href="/login">Login</a></p>
 {% endblock %}
