@@ -33,7 +33,7 @@ def check_hash(pw_hash, password):
 
 def check_errors(errors):
     '''Checks errors and returns True or Errors'''
-    if all(True if err == "" for err in errors.values()):
+    if all(True if err == "" else False for err in errors.values()):
         return True
     else:
         return errors
