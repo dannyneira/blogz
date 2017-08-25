@@ -29,7 +29,7 @@
         <a href="/newpost">New Post</a>
     </nav>
     <nav class='nav-user cyan'>
-        {% with username = session['username'] %}{% if session %}
+        {% with username = session['username'] %}{% if username %}
         <a href="/logout">Logout</a>
         <a href="/blog/{{ username }}">{{ username.title() }}</a>
         {% else %}

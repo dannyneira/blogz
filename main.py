@@ -78,15 +78,17 @@ def blog(page=1):
 def user_blog(username,page=1):
     user = User.query.filter_by(name=username).first()
     per_page = 5
+
     if not user:
         flash("That user {0}, doesn't exist".format(username), 'error')
         return redirect('/')
     else:
-        title_header = "{0}'s {1}".format(user.name.title(),title_header)
+        title_header = "{0}'s Blog Posts".format(user.name.title())
         user_blogs = Blog.query.filter_by(owner_id=user.id).order_by(Blog.id.desc()).paginate(page,per_page,error_out=False)
-        return render_template('blog.html',
+        return render_template('user_blog.html',
             base_title=title_header,
-            base_header=
+            base_header=title_header,
+            user=user,
             blogs=user_blogs)
 
 
