@@ -47,7 +47,7 @@ def validate_signup(username, email, password, verify):
     elif has_space(username):
         errors['username_err'] = "Your username cannot contain spaces"
     elif not valid_len(username):
-        errors['username_err'] = "That's not a valid email length (3-20 characters)"
+        errors['username_err'] = "That's not a valid username length (3-20 characters)"
 
     # Validate Emails
     if is_empty(email):
