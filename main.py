@@ -96,13 +96,13 @@ def newpost():
             db.session.commit()
             return redirect('/blog?id={0}'.format(new_blog.id))
         else:
-            return render_template('newpost.html',
+            return render_template('new_post.html',
                 base_title=title_header,
                 base_header=title_header,
                 title=title,
-                title_err=errors['title_err'],
+                title_err=validation['title_err'],
                 body=body,
-                body_err=errors['body_err'])
+                body_err=validation['body_err'])
     else:
         return render_template('new_post.html',
             base_title=title_header, 

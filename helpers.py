@@ -89,10 +89,18 @@ def validate_login(user, password):
 
 def validate_post(title, body):
     errors={'title_err':"",'body_err':""}
+    white_punc = string.whitespace+string.punctuation
 
+    # Validate Title
     if is_empty(title):
         errors['title_err'] = "You must enter a title"
+    elif all(char in white_punc for char in title):
+        errors['title_err'] = "How about putting some words in your title?"
+
+    # Validate Body
     if is_empty(body):
-        errors['title_err'] = "You must enter a title"
+        errors['body_err'] = "You must enter a body"
+    elif all(char in white_punc for char in body):
+        errors['body_err'] = "How about putting some words in your body?"
     
     return check_errors(errors)
