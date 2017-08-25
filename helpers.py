@@ -91,7 +91,7 @@ def validate_post(title, body):
     errors={'title_err':"",'body_err':""}
 
     if is_empty(title):
-        errors=['title_err'] = "You must enter a title"
+        errors['title_err'] = "You must enter a title"
     if is_empty(body):
         errors['title_err'] = "You must enter a title"
     

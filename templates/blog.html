@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     {% if blogs|length == 0 %}
-    <h4>No Blog Posts Yet, <a href="/signup">Signup</a> and Start Blogging!</h4>
+    <h4>No Blog Posts Yet, <a href="/login">Login</a> and Start Blogging!</h4>
     {% else %}
         {% for blog in blogs %}
         <h3><a class='link' href="/blog?id={{ blog.id }}">{{ blog.title }}</a></h3>

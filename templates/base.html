@@ -37,7 +37,7 @@
         <a href="/login">Login</a>
         {% endif %}{% endwith %}
     </nav><br>
-    <h1 class='header'>{{ header }}</h1>
+    <h1 class='header'>{{ base_header }}</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% for class, message in messages %}
         <span class='{{class}}'>{{ message }}</span>
