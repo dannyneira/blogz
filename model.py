@@ -1,20 +1,20 @@
-from flask import Flask, request, redirect, session, render_template, flash, make_response
-from flask_sqlalchemy import SQLAlchemy
-from helpers import validate_signup, validate_login, gen_hash, check_hash
+from app import db 
 from datetime import date
-from main import app
+from helpers import gen_hash
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(480))
     date = db.Column(db.Date)
+    deleted = db.Column(db.Boolean)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, body, owner):
         self.title = title
         self.body = body
         self.date = date.today()
+        self.deleted = False
         self.owner = owner
 
 class User(db.Model):
@@ -27,4 +27,4 @@ class User(db.Model):
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
-        self.password = password
+        self.password = gen_hash(password)

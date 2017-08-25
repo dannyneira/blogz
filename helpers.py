@@ -1,9 +1,7 @@
-from flask import Markup
 from re import match
 from hashlib import sha256
 from random import choice
 import string
-
 
 def is_empty(input):
     return True if input == "" else False
@@ -32,7 +30,6 @@ def check_hash(pw_hash, password):
     return True if pw_hash[0] == sha256(str.encode(password+pw_hash[1])).hexdigest() else False
 
 def check_errors(errors):
-    '''Checks errors and returns True or Errors'''
     if all(True if err == "" else False for err in errors.values()):
         return True
     else:
@@ -88,6 +85,7 @@ def validate_login(user, password):
     return check_errors(errors)
 
 def validate_post(title, body):
+    '''Validate user login'''
     errors={'title_err':"",'body_err':""}
     white_punc = string.whitespace+string.punctuation
 

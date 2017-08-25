@@ -1,43 +1,7 @@
-from flask import Flask, request, redirect, session, render_template, flash, make_response
-from flask_sqlalchemy import SQLAlchemy
-from helpers import validate_signup, validate_login, validate_post, gen_hash, check_hash
-from datetime import date
-
-app = Flask(__name__)
-app.config['DEBUG'] = True
-# Note: the connection string after :// contains the following info:
-# user:password@server:portNumber/databaseName
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:root@localhost:8889/blogz'
-app.config['SQLALCHEMY_ECHO'] = True
-db = SQLAlchemy(app)
-app.secret_key = 'f72746fd810a750dbee37dc116c2aa6aaf070df82d0bd7edb42bfbb42c96e9b3'
-
-class Blog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
-    body = db.Column(db.String(480))
-    date = db.Column(db.Date)
-    deleted = db.Column(db.Boolean)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __init__(self, title, body, owner):
-        self.title = title
-        self.body = body
-        self.date = date.today()
-        self.deleted = False
-        self.owner = owner
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    email = db.Column(db.String(120))
-    password = db.Column(db.String(120))
-    blogs = db.relationship('Blog', backref='owner')
-
-    def __init__(self, name, email, password):
-        self.name = name
-        self.email = email
-        self.password = password
+from app import app
+from model import Blog, User
+from flask import flash, render_template, redirect, request, session
+from helpers import validate_signup, validate_login, validate_post
 
 @app.before_request
 def require_login():
@@ -194,6 +158,7 @@ def logout():
 if __name__ == "__main__":
     app.run()
 
+# TODO - 'Delete' Post functionality
 # @app.route('/delpost', methods=['POST'])
 # def delete_post():
 
