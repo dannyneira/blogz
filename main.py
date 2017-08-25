@@ -49,7 +49,7 @@ def index():
     users = User.query.all()
     return render_template('index.html', 
         base_title=title_header,
-        header=title_header,
+        base_header=title_header,
         users=users)
 
 @app.route('/blog', methods=['GET'])
@@ -63,19 +63,19 @@ def blog():
         # blogs = sorted(Blog.query.filter_by(owner_id=user.id).all(), key=lambda x: x.id, reverse=True)
         return render_template('blog.html',
             base_title=title_header,
-            header="{0}'s {1}".format(user.name.title(),title_header),
+            base_header="{0}'s {1}".format(user.name.title(),title_header),
             blogs=blogs)
     elif post:
         return render_template('post.html',
             base_title=title_header,
-            header=post.title,
+            base_header=post.title,
             post=post)
     else:
         blogs = Blog.query.order_by(Blog.id.desc()).all()
         # blogs = sorted(Blog.query.all(), key=lambda x: x.id, reverse=True)
         return render_template('blog.html',
             base_title=title_header,
-            header=title_header,
+            base_header=title_header,
             blogs=blogs)
 
 @app.route('/newpost', methods=['GET','POST'])
@@ -86,30 +86,25 @@ def newpost():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
-        
-        errors = {'title_err':"", 'body_err':""}
-        if title == '':
-            errors['title_err'] = 'Please fill in Title'
-        if body == '':            
-            errors['body_err'] = 'Please fill in Body'
+        validation = validate_post(title, body)
 
-        if any("" != err for err in errors.values()):
-            return render_template('newpost.html',
-                base_title=title_header,
-                header=title_header,
-                title=title,
-                body=body,
-                base_title_err=errors['title_err'],
-                body_err=errors['body_err'])
-        else:
+        if validation == True:
             new_blog = Blog(title, body, user)
             db.session.add(new_blog)
             db.session.commit()
             return redirect('/blog?id={0}'.format(new_blog.id))
+        else:
+            return render_template('newpost.html',
+                base_title=title_header,
+                base_header=title_header,
+                title=title,
+                title_err=errors['title_err'],
+                body=body,
+                body_err=errors['body_err'])
     else:
         return render_template('new_post.html',
             base_title=title_header, 
-            header=title_header)
+            base_header=title_header)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -129,17 +124,13 @@ def signup():
             db.session.commit()
 
             session['username'] = new_user.name
-            flash("Registered as " + session['username'], 'info')
+            flash("Registered as " + new_user.name, 'info')
             return redirect('/newpost')
         else:
             flash("Signup Failed!", 'error')
-            if validation['email_err'] != "":
-                email = ''
-            if validation['username_err'] != "":
-                username = ''
             return render_template('signup.html',
                 base_title=title_header,
-                header=title_header,
+                base_header=title_header,
                 username=username,
                 username_err=validation['username_err'],
                 email=email,
@@ -147,7 +138,7 @@ def signup():
                 password_err=validation['password_err'],
                 verify_err=validation['verify_err'])
     else:
-        return render_template('signup.html', base_title=title_header, header=title_header)
+        return render_template('signup.html', base_title=title_header, base_header=title_header)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -165,28 +156,26 @@ def login():
             return redirect('/newpost')
         else:
             flash("Login Failed!", 'error')
-            if validation['username_err'] != '':
-                username = ''
             return render_template('login.html',
                 base_title=title_header,
-                header=title_header,
+                base_header=title_header,
                 username=username,
                 username_err=validation['username_err'],
                 password_err=validation['password_err'])
     else:
         return render_template('login.html', 
             base_title=title_header,
-            header=title_header)
+            base_header=title_header)
 
 @app.route('/logout')
 def logout():
     if 'username' not in session:
         flash("Not logged into any User", 'error')
-        return redirect('/')
+        return redirect('/blog')
     else:
         flash("Goodbye " + session['username'].title(), 'info')
         del session['username']
-        return redirect('/')
+        return redirect('/blog')
 
 if __name__ == "__main__":
     app.run()
