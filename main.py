@@ -133,12 +133,16 @@ def signup():
             return redirect('/newpost')
         else:
             flash("Signup Failed!", 'error')
+            if validation['email_err'] != "":
+                email = ''
+            if validation['username_err'] != "":
+                username = ''
             return render_template('signup.html',
                 base_title=title_header,
                 header=title_header,
-                username=validation['username'],
+                username=username,
                 username_err=validation['username_err'],
-                email=validation['email'],
+                email=email,
                 email_err=validation['email_err'],
                 password_err=validation['password_err'],
                 verify_err=validation['verify_err'])
@@ -161,8 +165,8 @@ def login():
             return redirect('/newpost')
         else:
             flash("Login Failed!", 'error')
-            if validation['username_err'] == '':
-                
+            if validation['username_err'] != '':
+                username = ''
             return render_template('login.html',
                 base_title=title_header,
                 header=title_header,

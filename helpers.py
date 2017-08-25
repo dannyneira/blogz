@@ -32,7 +32,7 @@ def check_hash(pw_hash, password):
     return True if pw_hash[0] == sha256(str.encode(password+pw_hash[1])).hexdigest() else False
 
 def validate_signup(username, email, password, verify):
-    errors = {'username':"",'email':"",'username_err':"",'email_err':"",'password_err':"",'verify_err':""}
+    errors = {'username_err':"",'email_err':"",'password_err':"",'verify_err':""}
     
     # Validate Username
     if is_empty(username):
@@ -67,14 +67,10 @@ def validate_signup(username, email, password, verify):
     if all(True if err == "" else False for err in errors.values()):
         return True
     else:
-        if errors['email_err'] == "":
-            errors['email'] = email
-        if errors['username_err'] == "":
-            errors['username'] = username
         return errors
 
 def validate_login(user, password):
-    errors = {'username':"",'username_err':"",'password_err':""}
+    errors = {'username_err':"",'password_err':""}
 
     # Validate Emails
     if not user:
