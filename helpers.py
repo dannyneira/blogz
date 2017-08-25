@@ -31,6 +31,13 @@ def check_hash(pw_hash, password):
     pw_hash = pw_hash.split(',')
     return True if pw_hash[0] == sha256(str.encode(password+pw_hash[1])).hexdigest() else False
 
+def check_errors(errors):
+    '''Checks errors and returns True or Errors'''
+    if all(True if err == "" for err in errors.values()):
+        return True
+    else:
+        return errors
+
 def validate_signup(username, email, password, verify):
     errors = {'username_err':"",'email_err':"",'password_err':"",'verify_err':""}
     
@@ -63,11 +70,7 @@ def validate_signup(username, email, password, verify):
     elif not valid_pass(password, verify):
         errors['password_err'] = "Passwords don't match"
 
-    # Check for errors
-    if all(True if err == "" else False for err in errors.values()):
-        return True
-    else:
-        return errors
+    return check_errors(errors)
 
 def validate_login(user, password):
     errors = {'username_err':"",'password_err':""}
@@ -82,11 +85,14 @@ def validate_login(user, password):
     elif not check_hash(user.password, password):
         errors['password_err'] = "Incorrect password, please try again"
     
-    # Return True is there are no Errors
-    if all(True if err == "" else False for err in errors.values()):
-        return True
-    else:
-        return errors
+    return check_errors(errors)
 
 def validate_post(title, body):
-    errors={}
+    errors={'title_err':"",'body_err':""}
+
+    if is_empty(title):
+        errors=['title_err'] = "You must enter a title"
+    if is_empty(body):
+        errors['title_err'] = "You must enter a title"
+    
+    return check_errors(errors)
