@@ -87,3 +87,6 @@ def validate_login(user, password):
         return True
     else:
         return errors
+
+def validate_post(title, body):
+    errors={}
