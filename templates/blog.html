@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if blogs|length == 0 %}
+    {% if blogs == None %}
     <h4>No Blog Posts Yet, <a href="/login">Login</a> and Start Blogging!</h4>
     {% else %}
-        {% for blog in blogs %}
+        {% for blog in blogs.items %}
         <h3><a class='link' href="/blog?id={{ blog.id }}">{{ blog.title }}</a></h3>
         <p>{{ blog.body }}</p>
         <p class="author">written by <a href="/blog?username={{ blog.owner.name }}">{{blog.owner.name}}</a> on {{ blog.date }}</p>
         {% endfor %}
+        {% if blogs.has_prev %}<a href="{{ url_for('blog', page=blogs.prev_num) }}">
+            &lt;&lt; Newer posts</a>{% else %}&lt;&lt; Newer posts{% endif %} | 
+        {% if blogs.has_next %}<a href="{{ url_for('blog', page=blogs.next_num) }}">
+            Older posts &gt;&gt;</a>{% else %}Older posts &gt;&gt;{% endif %}
     {% endif %}
 {% endblock %}

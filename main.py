@@ -41,7 +41,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blocked_routes = ['newpost', 'delpost']
+    blocked_routes = ['new_post', 'delete_post']
     if request.endpoint in blocked_routes and 'username' not in session:
         return redirect('/login')
 
@@ -55,6 +55,17 @@ def index():
         users=users)
 
 @app.route('/blog', methods=['GET'])
+@app.route('/blog/<int:page>',methods=['GET'])
+def blog(page=1):
+    title_header = 'Blog Posts'
+    per_page = 5
+    blogs = Blog.query.order_by(Blog.id.desc()).paginate(page,per_page,error_out=False)
+    return render_template('blog.html',
+        base_title=title_header,
+        base_header=title_header,
+        blogs=blogs)
+
+@app.route('/blog', methods=['GET'])
 def blog():
     title_header = 'Blog Posts'
     user = User.query.filter_by(name=request.args.get('username')).first()
@@ -62,7 +73,6 @@ def blog():
 
     if user:
         blogs = Blog.query.filter_by(owner_id=user.id).order_by(Blog.id.desc()).all()
-        # blogs = sorted(Blog.query.filter_by(owner_id=user.id).all(), key=lambda x: x.id, reverse=True)
         return render_template('blog.html',
             base_title=title_header,
             base_header="{0}'s {1}".format(user.name.title(),title_header),
@@ -74,14 +84,13 @@ def blog():
             post=post)
     else:
         blogs = Blog.query.order_by(Blog.id.desc()).all()
-        # blogs = sorted(Blog.query.all(), key=lambda x: x.id, reverse=True)
         return render_template('blog.html',
             base_title=title_header,
             base_header=title_header,
             blogs=blogs)
 
 @app.route('/newpost', methods=['GET','POST'])
-def newpost():
+def new_post():
     title_header = 'Add Blog Post'
     user = User.query.filter_by(name=session['username']).first()
 
