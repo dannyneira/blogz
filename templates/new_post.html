@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>Add A Blog Post</h3>
 <form action='/newpost' method='post'>
-    <label>Title:
-        <input type="text" name='title' value='{{ title }}'/>
-    </label><br>
+    <label for='title'>Title:</label>
+        <input id='title' type="text" name='title' value='{{ title }}'/><br>
     <span class='error' >{{ title_err }}</span><br>
-    <label>Body:<br>
-        <textarea name='body' cols="30" rows="10" maxlength="480">{{ body }}</textarea>
-    </label><br>
+    <label for='body'>Body:</label>
+        <textarea id='body' name='body' cols="30" rows="10" maxlength="480">{{ body }}</textarea><br>
     <span class='error' >{{ body_err }}</span><br>
-    <input type="submit" value='Add Post' />
+    <button class="btn cyan waves-effect waves-light" type='submit' name='action'>Add Post</button>
 </form>
 {% endblock %}

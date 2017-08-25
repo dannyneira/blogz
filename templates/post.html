@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>{{ body }}</p>
+<p>{{ post.body }}</p>
+<p class="author">written by <a href="/blog?username={{ post.owner.name }}">{{ post.owner.name }}</a> on {{ post.date }}</p>
 {% endblock %}

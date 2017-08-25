@@ -4,14 +4,6 @@ from hashlib import sha256
 from random import choice
 import string
 
-def gen_hash(password, seed=None):
-    if not seed:
-        seed = "".join(choice(string.ascii_letters) for i in range(5))
-    return "{0},{1}".format(sha256(str.encode(password+seed)).hexdigest(),seed)
-
-def check_hash(hash, password):
-    hash,seed = hash.split(',')
-    return True if hash[0] == sha256(str.encode(password+hash[1])).hexdigest() else False
 
 def is_empty(input):
     return True if input == "" else False
@@ -30,23 +22,41 @@ def valid_email(email):
     reg = match(r"[^@]+@[^@]+\.[^@]+", email)
     return True if reg != None else False
 
-def validate_signup(email, password, verify):
-    errors = {'email':"",'email_err':"",'password_err':"",'verify_err':""}
+def gen_hash(password, salt=None):
+    if not salt:
+        salt = "".join(choice(string.ascii_letters) for i in range(5))
+    return "{0},{1}".format(sha256(str.encode(password+salt)).hexdigest(),salt)
+
+def check_hash(pw_hash, password):
+    pw_hash = pw_hash.split(',')
+    return True if pw_hash[0] == sha256(str.encode(password+pw_hash[1])).hexdigest() else False
+
+def validate_signup(username, email, password, verify):
+    errors = {'username':"",'email':"",'username_err':"",'email_err':"",'password_err':"",'verify_err':""}
     
+    # Validate Username
+    if is_empty(username):
+        errors['username_err'] = "You must enter a username"
+    elif has_space(username):
+        errors['username_err'] = "Your username cannot contain spaces"
+    elif not valid_len(username):
+        errors['username_err'] = "That's not a valid email length (3-20 characters)"
+
     # Validate Emails
-    if not is_empty(email):
-        if has_space(email):
-            errors['email_err'] = "Your email cannot contain spaces"
-        elif not valid_len(email):
-            errors['email_err'] = "That's not a valid email length (3-20 characters)"
-        elif not valid_email(email):
-            errors['email_err'] = "That's not a valid email (hello@gmail.com)"
+    if is_empty(email):
+        errors['email_err'] = "You must enter an email"
+    elif has_space(email):
+        errors['email_err'] = "Your email cannot contain spaces"
+    elif not valid_email(email):
+        errors['email_err'] = "That's not a valid email (hello@gmail.com)"
 
     # Validate Passwords
     if is_empty(password) or is_empty(verify):
-        errors['password_err'] = "You must enter a password"
-        errors['verify_err'] = "You must enter a verification password"
-    elif has_space(password):
+        if is_empty(password):
+            errors['password_err'] = "You must enter a password"
+        if is_empty(verify):
+            errors['verify_err'] = "You must enter a verification password"
+    elif has_space(password) or has_space(verify):
         errors['password_err'] = "Your password cannot contain spaces"
     elif not valid_len(password):
         errors['password_err'] = "That's not a valid password length (3-20 characters)"
@@ -54,29 +64,30 @@ def validate_signup(email, password, verify):
         errors['password_err'] = "Passwords don't match"
 
     # Check for errors
-    if any(True if val != "" else False for val in errors.values()):
+    if all(True if err == "" else False for err in errors.values()):
+        return True
+    else:
         if errors['email_err'] == "":
             errors['email'] = email
+        if errors['username_err'] == "":
+            errors['username'] = username
         return errors
-    else:
-        return True
 
 def validate_login(user, password):
-    errors = {'email':"",'email_err':"",'password_err':""}
+    errors = {'username':"",'username_err':"",'password_err':""}
 
     # Validate Emails
-    if user == None:
-        errors['email_err'] = "Email not found, please try again or signup"
+    if not user:
+        errors['username_err'] = "Username not found, please try again or signup"
+
     # Validate Passwords
-    if user and password == "":
-        errors['email'] = user.email
+    if password == "":
         errors['password_err'] = "Please enter your password"
-    elif user and not check_pw_hash(password, user.password):
-        errors['email'] = user.email
+    elif not check_hash(user.password, password):
         errors['password_err'] = "Incorrect password, please try again"
     
     # Return True is there are no Errors
-    if any(True if val != "" else False for val in errors.values()):
-        return errors
-    else:
+    if all(True if err == "" else False for err in errors.values()):
         return True
+    else:
+        return errors

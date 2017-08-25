@@ -1,29 +1,41 @@
 <!doctype html>
 <html>
     <head>
-        <title>{{base_title}}</title>
+        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.css') }}" media="screen,projection">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
             html, body{margin-top: 1rem; margin-left: 10rem; margin-right: 10rem;
                 font-family: Arial, Helvetica, sans-serif;}
-            br, hr{ clear:both;}
-            a{text-decoration: none; color:blue; margin-right: 1rem;}
-            a:visited{color:blue;}
-            .error{color:red;}
-            .info{color:green}
-            .header{text-align: left;}
-            .nav-bar{float:left;}
-            .nav-user{float:right;}
+                br, hr{clear:both;}
+                label{font-size: 1.25rem;}
+                a{text-decoration: none; color:blue;}
+                a:visited{color:blue;}
+                .error{color:red; font-family: monospace; font-size: 1.25rem;}
+                .info{color:green; font-family: monospace; font-size: 1.25rem;}
+                .header{text-align: left;}
+                .author{font-size: .75rem; font-style: italic;}
+                .nav-bar a{float:left; margin: 0 1rem 0 0;}
+                .nav-user a{float:right; margin: 0 0 0 1rem;}
         </style>
+        <title>{{base_title}}</title>
     </head>
 <body>
-    <nav class='nav-bar'>
+    <nav class='nav-bar cyan'>
         <a href="/">Home</a>
         <a href="/blog">All Posts</a>
         <a href="/newpost">New Post</a>
     </nav>
-    <nav class='nav-user'>
-        <a href="/login">Login</a>
+    <nav class='nav-user cyan'>
+        {% with session = session['username'] %}{% if session %}
         <a href="/logout">Logout</a>
+        <a href="/blog?username={{ session }}">{{ session.title() }}</a>
+        {% else %}
+        <a href="/signup">Signup</a>
+        <a href="/login">Login</a>
+        {% endif %}{% endwith %}
     </nav><br>
     <h1 class='header'>{{ header }}</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}
@@ -31,7 +43,6 @@
         <span class='{{class}}'>{{ message }}</span>
     {% endfor %}
     {% endwith %}
-    <hr>
     {% block content %}
     {% endblock %}
 </body>

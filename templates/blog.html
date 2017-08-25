@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
     {% if blogs|length == 0 %}
-    <p>No Blog Posts Yet</p>
+    <h4>No Blog Posts Yet, <a href="/signup">Signup</a> and Start Blogging!</h4>
     {% else %}
         {% for blog in blogs %}
         <h3><a class='link' href="/blog?id={{ blog.id }}">{{ blog.title }}</a></h3>
         <p>{{ blog.body }}</p>
-        <hr>
+        <p class="author">written by <a href="/blog?username={{ blog.owner.name }}">{{blog.owner.name}}</a> on {{ blog.date }}</p>
         {% endfor %}
     {% endif %}
 {% endblock %}

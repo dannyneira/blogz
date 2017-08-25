@@ -2,24 +2,26 @@
 {% block content %}
 <form action="/login" method="post">
     <table>
-        <tr>
+        <tr class='row'>
             <td>
-                <label for="email">Email
-                <input id='email' name="email" type="text" value='{{ email }}'>
-                <span class="error">{{ email_err }}</span>
-                </label>
+            <div class="input-field col s12">
+                <label for="username">Username</label>
+                <input class='validate' id='username' name="username" type="text" value='{{ username }}'>
+                <span class="error">{{ username_err }}</span>
+            </div>
             </td>
         </tr>
-        <tr>
+        <tr class='row'>
             <td>
-                <label for="password">Password
-                <input id='password' name="password" type="password">
+            <div class="input-field col s12">
+                <label for="password">Password</label>
+                <input class='validate' id="password" name="password" type="password">
                 <span class="error">{{ password_err }}</span>
-                </label>
+            </div>
             </td>
         </tr>
     </table>
-    <input type="submit" value="Login">
+    <button class="btn cyan waves-effect waves-light" type="submit" name="action">Login</button>
 </form>
-<p>Don't have an account? <a href="/signup">Create One!</a></p>
+<p>Don't have an account? <a href="/signup">Signup</a>!</p>
 {% endblock %}
