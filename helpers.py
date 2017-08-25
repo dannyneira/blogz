@@ -75,14 +75,14 @@ def validate_signup(username, email, password, verify):
 def validate_login(user, password):
     errors = {'username_err':"",'password_err':""}
 
-    # Validate Emails
+    # Validate User
     if not user:
         errors['username_err'] = "Username not found, please try again or signup"
 
     # Validate Passwords
-    if password == "":
+    if user and password == "":
         errors['password_err'] = "Please enter your password"
-    elif not check_hash(user.password, password):
+    elif user and not check_hash(user.password, password):
         errors['password_err'] = "Incorrect password, please try again"
     
     return check_errors(errors)

@@ -1,4 +1,8 @@
 {
     "python.pythonPath": "/Users/lolaruggamuffin/miniconda3/envs/flask-env/bin/python",
-    "python.linting.pylintEnabled": false
+    "python.linting.pylintEnabled": false,
+    "python.unitTest.promptToConfigure": false,
+    "python.unitTest.pyTestEnabled": false,
+    "python.unitTest.unittestEnabled": false,
+    "python.unitTest.nosetestsEnabled": false
 }

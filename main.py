@@ -17,12 +17,14 @@ class Blog(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(480))
     date = db.Column(db.Date)
+    deleted = db.Column(db.Boolean)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, body, owner):
         self.title = title
         self.body = body
         self.date = date.today()
+        self.deleted = False
         self.owner = owner
 
 class User(db.Model):
