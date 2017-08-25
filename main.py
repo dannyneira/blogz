@@ -55,39 +55,40 @@ def index():
         users=users)
 
 @app.route('/blog', methods=['GET'])
-@app.route('/blog/<int:page>',methods=['GET'])
+@app.route('/blog/<int:page>', methods=['GET'])
 def blog(page=1):
     title_header = 'Blog Posts'
     per_page = 5
-    blogs = Blog.query.order_by(Blog.id.desc()).paginate(page,per_page,error_out=False)
-    return render_template('blog.html',
-        base_title=title_header,
-        base_header=title_header,
-        blogs=blogs)
-
-@app.route('/blog', methods=['GET'])
-def blog():
-    title_header = 'Blog Posts'
-    user = User.query.filter_by(name=request.args.get('username')).first()
     post = Blog.query.filter_by(id=request.args.get('id')).first()
 
-    if user:
-        blogs = Blog.query.filter_by(owner_id=user.id).order_by(Blog.id.desc()).all()
-        return render_template('blog.html',
-            base_title=title_header,
-            base_header="{0}'s {1}".format(user.name.title(),title_header),
-            blogs=blogs)
-    elif post:
+    if post:
         return render_template('post.html',
             base_title=title_header,
             base_header=post.title,
             post=post)
     else:
-        blogs = Blog.query.order_by(Blog.id.desc()).all()
+        all_blogs = Blog.query.order_by(Blog.id.desc()).paginate(page,per_page,error_out=False)
         return render_template('blog.html',
             base_title=title_header,
             base_header=title_header,
-            blogs=blogs)
+            blogs=all_blogs)
+
+@app.route('/blog/<username>', methods=['GET'])
+@app.route('/blog/<username>/<int:page>', methods=['GET'])
+def user_blog(username,page=1):
+    user = User.query.filter_by(name=username).first()
+    per_page = 5
+    if not user:
+        flash("That user {0}, doesn't exist".format(username), 'error')
+        return redirect('/')
+    else:
+        title_header = "{0}'s {1}".format(user.name.title(),title_header)
+        user_blogs = Blog.query.filter_by(owner_id=user.id).order_by(Blog.id.desc()).paginate(page,per_page,error_out=False)
+        return render_template('blog.html',
+            base_title=title_header,
+            base_header=
+            blogs=user_blogs)
+
 
 @app.route('/newpost', methods=['GET','POST'])
 def new_post():

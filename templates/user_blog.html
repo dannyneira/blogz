@@ -8,7 +8,7 @@
         <p>{{ blog.body }}</p>
         <p class="author">written by <a href="/blog/{{ blog.owner.name }}">{{blog.owner.name}}</a> on {{ blog.date }}</p>
         {% endfor %}
-        {% if blogs.has_prev %}<a href="{{ url_for('blog', page=blogs.prev_num) }}">
+        {% if blogs.has_prev %}<a href="{{ url_for('blog/', page=blogs.prev_num) }}">
             &lt;&lt; Newer posts</a>{% else %}&lt;&lt; Newer posts{% endif %} | 
         {% if blogs.has_next %}<a href="{{ url_for('blog', page=blogs.next_num) }}">
             Older posts &gt;&gt;</a>{% else %}Older posts &gt;&gt;{% endif %}

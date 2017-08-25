@@ -5,7 +5,7 @@
     {% else %}
     <ul>
         {% for user in users %}
-        <li><a href="/blog?user={{ user.name }}">{{ user.name }}</a></li>
+        <li><a href="/blog/{{ user.name }}">{{ user.name }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}
