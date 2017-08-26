@@ -8,20 +8,6 @@
         <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!-- <style>
-            html, body{margin-top: 1rem; margin-left: 10rem; margin-right: 10rem;
-                font-family: Arial, Helvetica, sans-serif;}
-                br, hr{clear:both;}
-                label{font-size: 1.25rem;}
-                a{text-decoration: none; color:blue;}
-                a:visited{color:blue;}
-                .error{color:red; font-family: monospace; font-size: 1.25rem;}
-                .info{color:green; font-family: monospace; font-size: 1.25rem;}
-                .header{text-align: left;}
-                .author{font-size: .75rem; font-style: italic;}
-                .nav-bar a{float:left; margin: 0 1rem 0 0;}
-                .nav-user a{float:right; margin: 0 0 0 1rem;}
-        </style> -->
         <title>{{base_title}}</title>
     </head>
 <body>
@@ -29,10 +15,11 @@
         <nav>
             <div class="nav-wrapper cyan darken-3">
                 <div class="logo left">
-                    <a href="/"><img class="icon left" src="{{ url_for('static',filename='icons/blogz.png') }}">Blogz</a>
+                    <a href="/"><img class="icon left" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
                 </div>
                 <ul class="left">
-                    <li><a href="/blog"><i class="material-icons left">view_headline</i>View All</a></li>
+                    <li><a href="/blog"><i class="material-icons left">layers
+                        </i>View All</a></li>
                     <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
                 </ul>
                 <ul class='right'>
@@ -47,13 +34,14 @@
             </div>
         </nav>
     </div>
-    <h1 class='header'>{{ base_header }}</h1>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% for class, message in messages %}
-        <span class='{{class}}'>{{ message }}</span>
-    {% endfor %}
-    {% endwith %}
-    {% block content %}
-    {% endblock %}
+    <div class='container'>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% for class, message in messages %}
+            <span class='{{class}}'>{{ message }}</span>
+        {% endfor %}{% endwith %}
+        <h4 class='header center'>{{ base_header }}</h4>
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

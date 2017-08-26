@@ -1,7 +1,7 @@
-from app import app
+from app import app, db
 from model import Blog, User
 from flask import flash, render_template, redirect, request, session
-from helpers import validate_signup, validate_login, validate_post
+from helpers import validate_signup, validate_login, validate_post, check_hash
 
 @app.before_request
 def require_login():
@@ -97,7 +97,7 @@ def signup():
         validation = validate_signup(username, email, password, verify)
 
         if validation == True and not existing_user:
-            new_user = User(username, email, gen_hash(password))
+            new_user = User(username, email, password)
             db.session.add(new_user)
             db.session.commit()
 
