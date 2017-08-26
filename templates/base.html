@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}">
+        <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/blogz.png') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}" media="screen,projection">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.css') }}" media="screen,projection">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
         <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -23,20 +25,28 @@
         <title>{{base_title}}</title>
     </head>
 <body>
-    <nav class='nav-bar cyan'>
-        <a href="/">Home</a>
-        <a href="/blog">All Posts</a>
-        <a href="/newpost">New Post</a>
-    </nav>
-    <nav class='nav-user cyan'>
-        {% with username = session['username'] %}{% if username %}
-        <a href="/logout">Logout</a>
-        <a href="/blog/{{ username }}">{{ username.title() }}</a>
-        {% else %}
-        <a href="/signup">Signup</a>
-        <a href="/login">Login</a>
-        {% endif %}{% endwith %}
-    </nav><br>
+    <div class='navbar-fixed'>
+        <nav>
+            <div class="nav-wrapper cyan darken-3">
+                <div class="logo left">
+                    <a href="/"><img class="icon left" src="{{ url_for('static',filename='icons/blogz.png') }}">Blogz</a>
+                </div>
+                <ul class="left">
+                    <li><a href="/blog"><i class="material-icons left">view_headline</i>View All</a></li>
+                    <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
+                </ul>
+                <ul class='right'>
+                    {% with username = session['username'] %}{% if username %}
+                    <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/signup">Signup</a></li>
+                    {% endif %}{% endwith %}
+                </ul>
+            </div>
+        </nav>
+    </div>
     <h1 class='header'>{{ base_header }}</h1>
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% for class, message in messages %}
