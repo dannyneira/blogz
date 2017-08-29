@@ -19,6 +19,10 @@ body {
   main {
     flex: 1 0 auto;
   }
+
+#sidenav-overlay{
+    z-index: 996 !important;
+} 
 /* @media screen and (max-width: 480px) {
     .icon{
         width: 2rem;

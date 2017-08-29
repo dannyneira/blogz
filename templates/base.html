@@ -17,16 +17,16 @@
         <div class='navbar-fixed'>
             <nav>
                 <div class="nav-wrapper cyan darken-3">
-                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
                         <li><a href="/blog"><i class="material-icons left">layers</i>View All</a></li>
                         <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
                     </ul>
-                    <ul class="side-nav" id="slide-out">
+                    <ul class="side-nav" id="mobile-demo">
                         <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
                         <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
                     </ul>
-                    <a href="/"><img class="brand-logo circle center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
+                    <!-- <a href="/"><img class="brand-logo circle center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
                     <ul class='right'>
                         {% with username = session['username'] %}{% if username %}
                         <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
@@ -34,8 +34,8 @@
                         {% else %}
                         <li><a href="/login">Login</a></li>
                         <li><a href="/signup">Signup</a></li>
-                        {% endif %}{% endwith %}
-                    </ul>
+                        {% endif %}{% endwith %} -->
+                    <!-- </ul> -->
                 </div>
             </nav>
         </div>
