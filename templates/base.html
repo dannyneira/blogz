@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
         <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{{base_title}}</title>
     </head>
@@ -14,14 +15,16 @@
     <div class='navbar-fixed'>
         <nav>
             <div class="nav-wrapper cyan darken-3">
-                <div class="logo left">
-                    <a href="/"><img class="icon left" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
-                </div>
-                <ul class="left">
-                    <li><a href="/blog"><i class="material-icons right">layers
-                        </i>View All</a></li>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
+                    <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
+                </ul>
+                <ul class="side-nav" id="slide-out">
+                    <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
                     <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
                 </ul>
+                <a href="/"><img class="brand-logo center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
                 <ul class='right'>
                     {% with username = session['username'] %}{% if username %}
                     <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
