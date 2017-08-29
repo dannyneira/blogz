@@ -2,8 +2,8 @@
 Blogging site made for LaunchCode CodeCamp
 
 ## What I Learned:
-* MVC Pattern
-* Database Management with phpMySQL & Postgres
+* MVC Design Pattern
+* Relational Database Management with Postgres and MySQL
 * Object-Relational Mapping with SQL Alchemy
-* SHA256 Password Hashing
 * Materialize CSS Framework
+* Web App Deployment to Heroku
