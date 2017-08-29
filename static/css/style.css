@@ -1,11 +1,11 @@
 .logo{
-    margin: 0px 10px;
-    font-size: 1.6rem;
+    margin: 5px 10px;
+    font-size: 100rem;
 }
 .icon{
     width: 2rem;
     height: auto;
-    margin: 1.25rem;
+    margin: 1rem;
     position: relative;
     box-shadow: 0px 3px 3px #3E3E3E;
     border-radius:100px;

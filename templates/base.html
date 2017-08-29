@@ -18,9 +18,9 @@
                     <a href="/"><img class="icon left" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
                 </div>
                 <ul class="left">
-                    <li><a href="/blog"><i class="material-icons left">layers
+                    <li><a href="/blog"><i class="material-icons right">layers
                         </i>View All</a></li>
-                    <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
+                    <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
                 </ul>
                 <ul class='right'>
                     {% with username = session['username'] %}{% if username %}
