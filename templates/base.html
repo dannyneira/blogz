@@ -4,6 +4,7 @@
         <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/blogz.png') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/material-icons.css') }}" media="screen,projection">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.css') }}" media="screen,projection">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/ion-icons.css') }}" media="screen,projection">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}" media="screen,projection">
         <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static',filename='js/materialize.min.js') }}"></script>
@@ -12,32 +13,34 @@
         <title>{{base_title}}</title>
     </head>
 <body>
-    <div class='navbar-fixed'>
-        <nav>
-            <div class="nav-wrapper cyan darken-3">
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
-                    <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
-                </ul>
-                <ul class="side-nav" id="slide-out">
-                    <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
-                    <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
-                </ul>
-                <a href="/"><img class="brand-logo center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
-                <ul class='right'>
-                    {% with username = session['username'] %}{% if username %}
-                    <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                    {% else %}
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Signup</a></li>
-                    {% endif %}{% endwith %}
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <div class='container'>
+    <header>
+        <div class='navbar-fixed'>
+            <nav>
+                <div class="nav-wrapper cyan darken-3">
+                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
+                        <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
+                    </ul>
+                    <ul class="side-nav" id="slide-out">
+                        <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
+                        <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
+                    </ul>
+                    <a href="/"><img class="brand-logo center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
+                    <ul class='right'>
+                        {% with username = session['username'] %}{% if username %}
+                        <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                        {% else %}
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/signup">Signup</a></li>
+                        {% endif %}{% endwith %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
         {% with messages = get_flashed_messages(with_categories=True) %}
         {% for class, message in messages %}
             <span class='{{class}}'>{{ message }}</span>
@@ -45,6 +48,16 @@
         <h4 class='header center'>{{ base_header }}</h4>
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
+    <footer>
+        <footer class="page-footer cyan darken-3">
+            <div class="footer-copyright">
+                <div class="container">
+                © 2017 Copyright
+                <a class="grey-text text-lighten-4 right" href='https://github.com/dannyneira/blogz' target='_blank'>Fork Me on Github! <i class='ion-social-github'></i></a>
+                </div>
+            </div>
+        </footer>
+    </footer>        
 </body>
 </html>
