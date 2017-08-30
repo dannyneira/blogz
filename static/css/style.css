@@ -28,11 +28,9 @@ body {
 }
 .lc-blue{
     background-color: #344A5F;
-    color: #344A5F;
 }
 .lc-light-blue{
     background-color: #5C93CE;
-    color: #5C93CE;
 }
 /* @media screen and (max-width: 480px) {
     .icon{
