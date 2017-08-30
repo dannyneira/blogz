@@ -23,19 +23,19 @@
                         <li><a href="/newpost"><i class="material-icons left">create</i>New Post</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
-                        <li><a href="/blog"><i class="material-icons right">layers</i>View All</a></li>
-                        <li><a href="/newpost"><i class="material-icons right">create</i>New Post</a></li>
+                        <li><a href="/blog" class="waves-effect"><i class="material-icons right">layers</i>View All</a></li>
+                        <li><a href="/newpost" class="waves-effect"><i class="material-icons right">create</i>New Post</a></li>
                     </ul>
-                    <!-- <a href="/"><img class="brand-logo circle center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
+                    <a href="/"><img class="brand-logo circle center icon" src="{{ url_for('static',filename='icons/blogz.png') }}"></a>
                     <ul class='right'>
                         {% with username = session['username'] %}{% if username %}
                         <li><a href="/blog/{{ username }}">{{ username.title() }}</a></li>
                         <li><a href="/logout">Logout</a></li>
                         {% else %}
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/signup">Signup</a></li>
-                        {% endif %}{% endwith %} -->
-                    <!-- </ul> -->
+                        <li><a href="/login" class="waves-effect">Login</a></li>
+                        <li><a href="/signup" class="waves-effect">Signup</a></li>
+                        {% endif %}{% endwith %}
+                    </ul>
                 </div>
             </nav>
         </div>
@@ -49,15 +49,13 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer>
-        <footer class="page-footer cyan darken-3">
-            <div class="footer-copyright">
-                <div class="container">
-                © 2017 Copyright
-                <a class="grey-text text-lighten-4 right" href='https://github.com/dannyneira/blogz' target='_blank'>Fork Me on Github! <i class='ion-social-github'></i></a>
-                </div>
+    <footer class="page-footer cyan darken-3">
+        <div class="footer-copyright">
+            <div class="container">
+            © 2017 Copyright
+            <a class="grey-text text-lighten-4 right hov" href='https://github.com/dannyneira/blogz' target='_blank'>Fork Me on Github! <i class='ion-social-github'></i></a>
             </div>
-        </footer>
-    </footer>        
+        </div>
+    </footer>     
 </body>
 </html>

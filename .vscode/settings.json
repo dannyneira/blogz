@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/lolaruggamuffin/miniconda3/envs/flask-env/bin/python",
+    "python.pythonPath": "C:/Users/Cortana/AppData/Local/conda/conda/envs/flask-env/python",
     "python.linting.pylintEnabled": false,
     "python.unitTest.promptToConfigure": false,
     "python.unitTest.pyTestEnabled": false,

@@ -22,7 +22,10 @@ body {
 
 #sidenav-overlay{
     z-index: 996 !important;
-} 
+}
+.hov:hover{
+    font-size: 1.10rem;
+}
 /* @media screen and (max-width: 480px) {
     .icon{
         width: 2rem;
