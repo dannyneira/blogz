@@ -1,26 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="/login" method="post">
     <div class='col s12 m6'>
-        <div class='card large'>
+        <div class='card small'>
             <div class='card-content'>
-                <div class="input-field col s12">
-                    <label for="username">Username</label>
-                    <input class='validate' id='username' name="username" type="text" value='{{ username }}'>
-                    <span class="error">{{ username_err }}</span>
-                </div>
-            </div>
-            <div class='card-content'>
-                <div class="input-field col s12">
-                    <label for="password">Password</label>
-                    <input class='validate' id="password" name="password" type="password">
-                    <span class="error">{{ password_err }}</span>
-                </div>
-            </div>
-            <button class="btn halfway-fab waves-effect waves-light right cyan" type="submit" name="action">Login</button>
-            <div class="card-content">
-                <p>Don't have an account? <a href="/signup">Signup</a>!</p>
+                <form action="/login" method="post">
+                    <div class="input-field col s12">
+                        <label for="username">Username</label>
+                        <input class='validate' id='username' name="username" type="text" value='{{ username }}'>
+                        <span class="error">{{ username_err }}</span>
+                    </div>
+                    <div class="input-field col s12">
+                        <label for="password">Password</label>
+                        <input class='validate' id="password" name="password" type="password">
+                        <span class="error">{{ password_err }}</span>
+                    </div>
+                    <button class="btn halfway-fab waves-effect waves-light right lc-light-blue" type="submit" name="action">Login</button>
+                    <p>Don't have an account? <a href="/signup">Signup</a>!</p>
+                </form>
             </div>
         </div>
-</form>
 {% endblock %}
